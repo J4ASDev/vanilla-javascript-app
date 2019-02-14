@@ -3,11 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Podcasts - Vanilla JavaScript</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=K2D:400,600" rel="stylesheet">
   <link rel="stylesheet" href="src/css/home.css" />
   <link rel="stylesheet" href="src/css/modal.css" />
 </head>
 <body>
+  <header>
+    <form method="POST" class="search" id="form">
+      <input type="text" name="search" placeholder="Search for a specific topic">
+    </form>
+
+  </header>
   <section class="home" id="home">
     <ul>
       <li>
@@ -30,8 +36,11 @@
       </li>
     </ul>
   </section>
-  <div class="overlay" id="overlay">
-  </div>
+
+  <div class="featuring" id="featuring"></div>
+  <div class="modal" id="modal">HOLA</div>
+  <div class="overlay" id="overlay"></div>
+  <footer></footer>
   <script src="src/js/home.js"></script>
 </body>
 </html>

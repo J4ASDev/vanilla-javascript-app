@@ -32,25 +32,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /*transition: 300s ease-in;*/
-  /*opacity: 0;*/
-  /*visibility: hidden;*/
   display: none;
 }
 .overlay.active {
-  /*opacity: 1;*/
-  /*visibility: visible;*/
   display: flex;
 }
 .modal {
-
   width: 500px;
   background: white;
   padding: 2em;
   border-radius: .5em;
   text-align: center;
   z-index: 2;
-  transform: translateY(-3000px);
   position: absolute;
   left: 0;
   right: 0;
@@ -62,6 +55,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  display: none;
+  border: 1px solid red;
 }
 
 .modal-content {
