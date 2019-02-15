@@ -32,24 +32,24 @@ header input{
   overflow: auto;
 }
 
-#home .podcasts-container {
+.home .podcasts-container {
   border: 1px solid #f3f3f3;
   margin: 10px;
 }
 
-#home .podcasts-container figure {
+.home .podcasts-container figure {
   width: 200px;
 }
 
-#home .podcasts-container img {
+.home .podcasts-container img {
   width: 100%;
 }
 
-#home .podcasts-container h4 {
+.home .podcasts-container h4 {
   text-align: center;
 }
 
-#featuring {
+.featuring {
   position: fixed;
   background-image: url('https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero-00e10b1f.jpg');
   background-size: cover;
@@ -60,7 +60,7 @@ header input{
   overflow: auto;
 }
 
-#featuring .podcasts-container {
+.featuring .podcasts-container {
   display: grid;
   align-items: center;
   justify-content: center;
@@ -69,16 +69,18 @@ header input{
   border: 1px solid rgba(0,0,0, .43);
 }
 
-#featuring .podcasts-container figure {
+.featuring .podcasts-container figure {
   width: 150px;
   margin: 0 15px;
 }
 
-#featuring .podcasts-container img {
-  width: 100%;
+.featuring .podcasts-container img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
-#featuring .podcasts-container h4 {
+.featuring .podcasts-container h4 {
   height: 40px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -87,4 +89,32 @@ header input{
 
 .enabled {
   display: flex !important;
+}
+
+.featuring-not-found {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+  background:#22242a;
+  justify-content: center;
+}
+
+.featuring-not-found h3 {
+  color: white;
+}
+
+
+.fadeIn {
+  animation: 5000ms fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

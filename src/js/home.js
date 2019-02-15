@@ -22,8 +22,8 @@
   /* Function get data api Audioboom */
   async function getData(URL) {
     const result = await fetch(`${API}${URL}`)
-    const { body: { audio_clips } } = await result.json()
-
+    const { body: { audio_clips }} = await result.json()
+  
     return audio_clips
   }
   
@@ -57,8 +57,12 @@
     list.forEach(podcasts => {
       const HTMLString = HTMLTemplate(podcasts)
       const podcastsElement = createTemplate(HTMLString)
-         
       container.append(podcastsElement)
+      const image = podcastsElement.querySelector('img')
+      image.addEventListener('load', (event) => {
+        event.srcElement.classList.add('fadeIn')
+      })
+
 
       podcastsElement.addEventListener('click', () => {
         const id = parseInt(podcastsElement.dataset.id, 10)
@@ -103,23 +107,26 @@
       const message = document.createTextNode('The topic you wanted was not found')
       tagMessage.appendChild(message)
 
+      featuring.classList.replace('featuring', 'featuring-not-found')
       return featuring.appendChild(tagMessage)      
     }
     
+    featuring.classList.replace('featuring-not-found', 'featuring')
     renderTemplate(searchTopic, featuring)
   })
 
 
-  /* Data Api Audioboom */
   const basicPodcasts = await getData('audio_clips')
+  renderTemplate(basicPodcasts, basicContainer)
+
   const popularPodcasts = await getData('audio_clips/popular')
+  renderTemplate(popularPodcasts, popularContainer)
+  
   const featuredPodcasts = await getData('audio_clips/featured')
+  renderTemplate(featuredPodcasts, featuredContainer)
+  
   const allPodcasts = basicPodcasts.concat(popularPodcasts, featuredPodcasts)
 
-  /* Render dates */
-  renderTemplate(basicPodcasts, basicContainer)
-  renderTemplate(popularPodcasts, popularContainer)
-  renderTemplate(featuredPodcasts, featuredContainer)
 })()
 
 
