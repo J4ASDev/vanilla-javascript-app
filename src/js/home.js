@@ -4,8 +4,12 @@
 
   /* Elements DOM */
   const home = document.getElementById('home')
-
+  
   const modal = document.getElementById('modal')
+  const modalTitle = document.getElementById('modalTitle')
+  const modalImage = document.getElementById('modalImage')
+  const modalDescription = document.getElementById('modalDescription')
+  const btnModal = document.getElementById('btn-modal')
   const overlay = document.getElementById('overlay')
   
   const form = document.getElementById('form')
@@ -24,9 +28,10 @@
   }
   
   /* Functions to manipulate the HTML (create and add) */
-  const HTMLTemplate = podcasts => {
+
+  const HTMLTemplate = (podcasts) => {
     return (`
-      <div class="podcasts-container">
+      <div class="podcasts-container" data-id="${podcasts.id}">
         <figure>
           <img
             class="podcasts-cover"
@@ -45,7 +50,7 @@
     
     return html.body.children[0]
   }
-
+  
   const renderTemplate = (list, container) => {
     if (container.querySelector('img')) container.querySelector('img').remove()
 
@@ -54,11 +59,24 @@
       const podcastsElement = createTemplate(HTMLString)
          
       container.append(podcastsElement)
-      
-      podcastsElement.addEventListener('click', () => {
 
-        console.log(podcastsElement)
+      podcastsElement.addEventListener('click', () => {
+        const id = parseInt(podcastsElement.dataset.id, 10)
+        let podcastModal = allPodcasts.find(podcasts => podcasts.id === id)
+
         modal.style.display = 'block'
+        overlay.classList.add('active')
+
+        modalTitle.textContent = podcastModal.title
+        modalImage.setAttribute('src', podcasts.channel.urls.logo_image.original)
+        modalDescription.textContent = podcastModal.description
+
+
+        btnModal.addEventListener('click', () => {
+          modal.style.display = 'none'
+          overlay.classList.remove('active')
+        })
+
       })
     })
   }
@@ -96,12 +114,12 @@
   const basicPodcasts = await getData('audio_clips')
   const popularPodcasts = await getData('audio_clips/popular')
   const featuredPodcasts = await getData('audio_clips/featured')
+  const allPodcasts = basicPodcasts.concat(popularPodcasts, featuredPodcasts)
 
   /* Render dates */
   renderTemplate(basicPodcasts, basicContainer)
   renderTemplate(popularPodcasts, popularContainer)
   renderTemplate(featuredPodcasts, featuredContainer)
-  
 })()
 
 
