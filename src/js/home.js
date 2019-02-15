@@ -63,6 +63,12 @@
     })
   }
 
+  const removeTemplate = container => {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
     const data = new FormData(form)
@@ -72,6 +78,16 @@
     const searchTopic = await getData(`audio_clips?find[query]=${value}`)
     featuring.classList.add('enabled')
 
+    removeTemplate(featuring)
+
+    if (searchTopic.length <= 0) {
+      const tagMessage = document.createElement('h3')
+      const message = document.createTextNode('The topic you wanted was not found')
+      tagMessage.appendChild(message)
+
+      return featuring.appendChild(tagMessage)      
+    }
+    
     renderTemplate(searchTopic, featuring)
   })
 
