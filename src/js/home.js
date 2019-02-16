@@ -58,14 +58,16 @@
       const HTMLString = HTMLTemplate(podcasts)
       const podcastsElement = createTemplate(HTMLString)
       container.append(podcastsElement)
+
       const image = podcastsElement.querySelector('img')
+
       image.addEventListener('load', (event) => {
         event.srcElement.classList.add('fadeIn')
       })
 
-
       podcastsElement.addEventListener('click', () => {
         const id = parseInt(podcastsElement.dataset.id, 10)
+        const allPodcasts = basicPodcasts.concat(popularPodcasts, featuredPodcasts)
         let podcastModal = allPodcasts.find(podcasts => podcasts.id === id)
 
         modal.style.display = 'block'
@@ -115,17 +117,32 @@
     renderTemplate(searchTopic, featuring)
   })
 
+  const setLocalStorage = (name, data) => {
+    window.localStorage.setItem(name, JSON.stringify(data))
+  }
 
-  const basicPodcasts = await getData('audio_clips')
+  async function cacheExist (name, URL) {
+    const listName = `${name}Podcasts`
+    const cache = window.localStorage.getItem(listName)
+
+    if(cache) {
+      return JSON.parse(cache)
+    }
+
+    const data = await getData(URL)
+    setLocalStorage(listName, data)
+
+    return data
+  }
+  
+  const basicPodcasts = await cacheExist('basic', 'audio_clips')
   renderTemplate(basicPodcasts, basicContainer)
-
-  const popularPodcasts = await getData('audio_clips/popular')
+  
+  const popularPodcasts = await cacheExist('popular', 'audio_clips/popular')
   renderTemplate(popularPodcasts, popularContainer)
   
-  const featuredPodcasts = await getData('audio_clips/featured')
+  const featuredPodcasts = await cacheExist('featured', 'audio_clips/featured')
   renderTemplate(featuredPodcasts, featuredContainer)
-  
-  const allPodcasts = basicPodcasts.concat(popularPodcasts, featuredPodcasts)
 
 })()
 
